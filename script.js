@@ -1,47 +1,62 @@
-let jsontext;
-let loopDone=false;
 let countryList=[{}];
-let countryListFiltered = [{}];
-let myJSON;
-let randomFlagImg;
+let questionText;
+let randomFlagImg = [];
+let randomFlagImgInfo = [];
+let randomNumberArray = [];
+let points = 0;
+let pointsText;
+
 window.onload = async function(){
-    jsontext = document.getElementById("jsontext");
-    randomFlagImg = document.getElementById("randomflag");
+    questionText = document.getElementById("question");
+    pointsText =  document.getElementById("points");
+    randomFlagImg = document.querySelectorAll(".flagimg");
+    for(i=0; i< randomFlagImg.length; i++){
+        randomFlagImg[i].addEventListener("click", checkAnswer);
+    }
+
     getData();
 
 }
 
+//Fetch all the countries info from json.
 async function getData(){
-    const url = "https://restcountries.com/v3.1/all";
+    const url = "countries.json";
     let response = await fetch(url);
-    let data = await response.json();
-    console.log(data);
+    countryList = await response.json();
 
-    
-    for(i=0;i<250;i++){
-        let name = data[i]["name"]["common"];
-        let flag = data[i]["flags"]["svg"];
-        let independent = data[i]["independent"];
-        let capital = data[i]["capital"]?.[0];
-        countryList[i] = {"name": name, "flag": flag, "independent": independent, "capital": capital};
-        if(i==249){
-            loopDone = true;
-            console.log("loopdone")
-            filterArray();
-        }
+    //console.log(countryList);
+    setUpGame();
+}
+function setUpGame(){
+    //create 4 unique random numbers to choose info from the countryList.
+    while(randomNumberArray.length < 4){
+        var r = Math.floor(Math.random() * countryList.length);
+        if(randomNumberArray.indexOf(r) === -1) randomNumberArray.push(r);
     }
+    
+
+    for(i=0; i<4; i++){
+        randomFlagImg[i].src = countryList[randomNumberArray[i]].flag;
+        randomFlagImgInfo[i] = countryList[randomNumberArray[i]].name;
+        console.log(randomNumberArray[i]);
+        console.log(randomFlagImgInfo[i]);
+    }
+
+    questionText.innerText = randomFlagImgInfo[Math.floor(Math.random() * 4)];
+    pointsText.innerText = "Points: " + points.toString();
+
 }
 
-//Remove all nations that are not independent;
-function filterArray(){
-    countryListFiltered = countryList.filter(function(obj){
-        return obj.independent != false;
-    });
-
-    //myJSON = JSON.stringify(countryListFiltered);
-    let randomNum = Math.floor(Math.random() * countryListFiltered.length);
-    randomFlagImg.src = countryListFiltered[randomNum].flag;
-    console.log(countryListFiltered[randomNum].name);
-    //console.log(Math.floor(Math.random() * countryListFiltered.length));
-    //jsontext.innerText = myJSON;
+function checkAnswer(){
+    if(randomFlagImgInfo[this.id] === questionText.innerText){
+        alert("Correct!");
+        randomNumberArray = [];
+        points += 1;
+        setUpGame();
+    }
+    else{
+        alert("Wrong!");
+        randomNumberArray = [];
+        setUpGame();
+    }
 }
