@@ -5,19 +5,31 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>Document</title>
+    <title>Guess the flag</title>
     <script src="script.js"></script>
 </head>
 <body>
-    <div>
+    <div class="title">
         <h1 id="question"></h1>
         <h3 id="points">Points: 0</h3>
+        <h3 id="rounds">Round 1/10</h3>
     </div>
-    <div id="flag-container">
-        <img class="flagimg" id="0" src="" alt="">
-        <img class="flagimg" id="1" src="" alt="">
-        <img class="flagimg" id="2" src="" alt="">
-        <img class="flagimg" id="3" src="" alt="">
+    <div id="flags-container">
+        <div class="flag-container">
+            <img class="flagimg" id="0" src="" alt="">
+        </div>
+        <div class="flag-container">
+            <img class="flagimg" id="1" src="" alt="">
+        </div>
+        <div class="flag-container">
+            <img class="flagimg" id="2" src="" alt="">
+        </div>
+        <div class="flag-container">
+            <img class="flagimg" id="3" src="" alt="">
+        </div>
+    </div>
+    <div class="status">
+        <h1 id="statustext"></h1>
     </div>
 </body>
 </html>
