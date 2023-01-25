@@ -11,6 +11,7 @@ let questionText;
 let pointsText;
 let statusText;
 let roundsText;
+let correctAnswer;
 
 window.onload = async function(){
     questionText = document.getElementById("question");
@@ -52,10 +53,18 @@ function setUpGame(){
         randomFlagImgInfo[i] = countryList[randomNumberArray[i]].name;
     }
 
+    
     questionText.innerText = randomFlagImgInfo[Math.floor(Math.random() * 4)];
     statusText.innerText = "";
     roundsText.innerText = "Round " + rounds + "/" + maxRounds;
     
+    //log the correct answer
+    for(i=0;i<randomFlagImgInfo.length;i++){
+        if(randomFlagImgInfo[i].toUpperCase() === questionText.innerText){
+            correctAnswer = i;
+            break;
+        }
+    }
 
 }
 
@@ -78,6 +87,8 @@ function checkAnswer(){
     else{
         //clear the random number array.
         randomFlagImg[this.id].classList.add("incorrect");
+        randomFlagImg[correctAnswer].classList.add("correct");
+
         randomNumberArray = [];
 
         rounds += 1;
@@ -93,13 +104,22 @@ function newRound(){
     //prevent the user from clicking again
     removeEventListener();
 
-    if(rounds!=maxRounds){
+    if(rounds!=maxRounds + 1){
     //restart the game after timeout
     setTimeout(setUpGame,2000);
     }
     else{
         roundsText.innerText = "Game over!";
     }
+}
+
+function restartGame(){
+    points = 0;
+    pointsText.innerText = "Points: " + points.toString();
+
+    rounds = 1;
+    randomNumberArray = [];
+    setUpGame();
 }
 
 function removeEventListener(){
