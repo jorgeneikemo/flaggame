@@ -28,9 +28,9 @@ window.onload = async function(){
 async function getData(){
     const url = "countries.json";
     let response = await fetch(url);
+    // Convert the response into a JavaScript object
     countryList = await response.json();
 
-    //console.log(countryList);
     setUpGame();
 }
 function setUpGame(){
@@ -53,12 +53,12 @@ function setUpGame(){
         randomFlagImgInfo[i] = countryList[randomNumberArray[i]].name;
     }
 
-    
+    // Choose a random country for the question
     questionText.innerText = randomFlagImgInfo[Math.floor(Math.random() * 4)];
     statusText.innerText = "";
     roundsText.innerText = "Round " + rounds + "/" + maxRounds;
     
-    //log the correct answer
+    // Save the correct answer
     for(i=0;i<randomFlagImgInfo.length;i++){
         if(randomFlagImgInfo[i].toUpperCase() === questionText.innerText){
             correctAnswer = i;
@@ -68,34 +68,36 @@ function setUpGame(){
 
 }
 
+// This function runs when a flag is clicked
 function checkAnswer(){
+     // Check if the clicked flag's country name matches the question
     if(randomFlagImgInfo[this.id].toUpperCase() === questionText.innerText){
-        //alert("Correct!");
+        // Mark the flag as correct
         randomFlagImg[this.id].classList.add("correct");
+        // Reset the random number array
         randomNumberArray = [];
-
-        //change the points and count down round
+        // Increment points and rounds
         points += 1;
         rounds += 1;
-
+        // Update points and status text
         pointsText.innerText = "Points: " + points.toString();
         statusText.innerText = "Correct!";
         statusText.style.color = "green";
-
+        // Start a new round
         newRound();
     }
     else{
-        //clear the random number array.
+        // Mark the clicked flag as incorrect and the correct flag as correct
         randomFlagImg[this.id].classList.add("incorrect");
         randomFlagImg[correctAnswer].classList.add("correct");
-
+        // Reset the random number array
         randomNumberArray = [];
-
+        // Increment rounds
         rounds += 1;
-
+        // Update status text
         statusText.innerText = "Wrong!";
         statusText.style.color = "red";
-
+        //Start a new round
         newRound();
     }
 }
@@ -114,11 +116,13 @@ function newRound(){
 }
 
 function restartGame(){
+    //Reset the points to zero and update the points text
     points = 0;
     pointsText.innerText = "Points: " + points.toString();
 
     rounds = 1;
     randomNumberArray = [];
+    //Restart the game
     setUpGame();
 }
 
