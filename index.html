@@ -11,8 +11,18 @@
 <body>
     <div class="title">
         <h1 id="question"></h1>
-        <h3 id="points">Points: 0</h3>
-        <h3 id="rounds">Round 1/10</h3>
+        <div class="pointsholder">
+            <div class="points"></div>
+            <div class="points"></div>
+            <div class="points"></div>
+            <div class="points"></div>
+            <div class="points"></div>
+            <div class="points"></div>
+            <div class="points"></div>
+            <div class="points"></div>
+            <div class="points"></div>
+            <div class="points"></div>
+        </div>
     </div>
     <div id="flags-container">
         <div class="flag-container">
@@ -29,8 +39,8 @@
         </div>
     </div>
     <div class="status">
-        <h1 id="statustext"></h1>
         <button class="button" onclick="restartGame()">Restart</button>
+        <h1 id="statustext"></h1>
     </div>
 </body>
 </html>

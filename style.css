@@ -1,16 +1,15 @@
 body{
-    background-image: linear-gradient(rgb(255, 255, 255), rgb(220, 255, 231));
+    background-image: linear-gradient(rgb(243, 235, 235), rgb(199, 238, 211));
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     height: 100vh;
     user-select: none;
     overflow: hidden;
-    color: #3c4043;
+    color: #444748;
 }
 
 
 #flags-container{
     max-width: 40%;
-
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
@@ -28,8 +27,10 @@ body{
 }
 
 .title{
-    text-align: center;
-
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .title, .status{
@@ -56,17 +57,39 @@ body{
 }
 
 .correct{
-    border: 0.2rem solid rgb(0, 255, 0);
+    border: 0.3rem solid #00ff00;
     border-radius: 10px;
 }
 
 .incorrect{
-    border: 0.2rem solid rgb(255, 0, 0);
+    border: 0.3rem solid #ff0000;
     border-radius: 10px;
 }
 
 .flagimg:hover{
     scale: 1.02;
+}
+
+.pointsholder{
+    display: flex;
+    height: 1rem;
+    width: 40%;
+    margin-bottom: 2rem;
+}
+
+.points{
+    background-color: rgb(183, 183, 183);
+    flex-grow: 1;
+    border-radius: 25%;
+    margin: 0 0.5rem;
+}
+
+.points:first-child{
+    margin-left: 0;
+}
+
+.points:last-child{
+    margin-right: 0;
 }
 
 .button {
@@ -88,6 +111,7 @@ body{
   justify-content: center;
   letter-spacing: .25px;
   line-height: normal;
+  margin-top: 1rem;
   max-width: 100%;
   overflow: visible;
   padding: 2px 24px;
@@ -107,6 +131,10 @@ body{
 @media only screen and (max-width: 980px) {
     #flags-container{
         max-width: 80%
+    }
+
+    .pointsholder{
+        width: 80%;
     }
 
     #question{

@@ -7,6 +7,8 @@ let points = 0;
 let rounds = 1;
 const maxRounds = 10;
 
+let pointsDivs = [];
+
 let questionText;
 let pointsText;
 let statusText;
@@ -15,10 +17,9 @@ let correctAnswer;
 
 window.onload = async function(){
     questionText = document.getElementById("question");
-    pointsText =  document.getElementById("points");
     randomFlagImg = document.querySelectorAll(".flagimg");
     statusText = document.getElementById("statustext");
-    roundsText = document.getElementById("rounds");
+    pointsDivs = document.querySelectorAll('.points');
 
     getData();
 
@@ -56,7 +57,6 @@ function setUpGame(){
     // Choose a random country for the question
     questionText.innerText = randomFlagImgInfo[Math.floor(Math.random() * 4)];
     statusText.innerText = "";
-    roundsText.innerText = "Round " + rounds + "/" + maxRounds;
     
     // Save the correct answer
     for(i=0;i<randomFlagImgInfo.length;i++){
@@ -79,10 +79,10 @@ function checkAnswer(){
         // Increment points and rounds
         points += 1;
         rounds += 1;
-        // Update points and status text
-        pointsText.innerText = "Points: " + points.toString();
         statusText.innerText = "Correct!";
-        statusText.style.color = "green";
+        statusText.style.color = '#00ff00';
+        // Update points div
+        pointsDivs[rounds-2].style.backgroundColor = '#00ff00';
         // Start a new round
         newRound();
     }
@@ -96,7 +96,9 @@ function checkAnswer(){
         rounds += 1;
         // Update status text
         statusText.innerText = "Wrong!";
-        statusText.style.color = "red";
+        statusText.style.color = '#ff0000' ;
+        // Update points div
+        pointsDivs[rounds-2].style.backgroundColor = '#ff0000'; //
         //Start a new round
         newRound();
     }
@@ -111,17 +113,22 @@ function newRound(){
     setTimeout(setUpGame,2000);
     }
     else{
-        roundsText.innerText = "Game over!";
+        statusText.innerText = `Game Over. You got ${points}/${rounds-1} correct.`;
+        statusText.style.color = '#00ff00';
     }
 }
 
 function restartGame(){
-    //Reset the points to zero and update the points text
+    //Reset the points to zero
     points = 0;
-    pointsText.innerText = "Points: " + points.toString();
 
     rounds = 1;
     randomNumberArray = [];
+
+    //Reset the points divs color
+    for(let i = 0; i< pointsDivs.length; i++){
+        pointsDivs[i].style.backgroundColor = 'grey';
+    }
     //Restart the game
     setUpGame();
 }
