@@ -1,3 +1,4 @@
+//Global variables
 let countryList=[{}];
 let randomFlagImg = [];
 let randomFlagImgInfo = [];
@@ -20,9 +21,9 @@ window.onload = async function(){
     randomFlagImg = document.querySelectorAll(".flagimg");
     statusText = document.getElementById("statustext");
     pointsDivs = document.querySelectorAll('.points');
+    nextBtn = document.getElementById('nextbtn')
 
     getData();
-
 }
 
 //Fetch all the countries info from json.
@@ -35,6 +36,8 @@ async function getData(){
     setUpGame();
 }
 function setUpGame(){
+    //disable the nextbutton
+    nextBtn.disabled = true;
     //make the flags clickable
     for(i=0; i< randomFlagImg.length; i++){
         randomFlagImg[i].addEventListener("click", checkAnswer);
@@ -65,7 +68,6 @@ function setUpGame(){
             break;
         }
     }
-
 }
 
 // This function runs when a flag is clicked
@@ -109,8 +111,7 @@ function newRound(){
     removeEventListener();
 
     if(rounds!=maxRounds + 1){
-    //restart the game after timeout
-    setTimeout(setUpGame,2000);
+        nextBtn.disabled = false;
     }
     else{
         statusText.innerText = `Game Over. You got ${points}/${rounds-1} correct.`;

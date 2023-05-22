@@ -80,7 +80,7 @@ body{
 .points{
     background-color: rgb(183, 183, 183);
     flex-grow: 1;
-    border-radius: 25%;
+    border-radius: 20%;
     margin: 0 0.5rem;
 }
 
@@ -90,6 +90,12 @@ body{
 
 .points:last-child{
     margin-right: 0;
+}
+
+.buttons{
+    display: flex;
+    justify-content: center;
+    gap: 6rem;
 }
 
 .button {
@@ -107,12 +113,12 @@ body{
   font-family: "Google Sans",Roboto,Arial,sans-serif;
   font-size: 14px;
   font-weight: 500;
-  height: 48px;
+  height: 40px;
   justify-content: center;
   letter-spacing: .25px;
   line-height: normal;
   margin-top: 1rem;
-  max-width: 100%;
+  width: 10rem;
   overflow: visible;
   padding: 2px 24px;
   position: relative;
@@ -122,10 +128,19 @@ body{
   user-select: none;
 }
 
-.button:hover {
+.button:disabled{
+    background-color: #9e9e9e;
+}
+
+.btnrestart:hover:enabled {
   background-color: #ff6262;
   color: #ffffff;
 }
+
+.btnnext:hover:enabled {
+    background-color: #87ff69;
+    color: #ffffff;
+  }
 
   
 @media only screen and (max-width: 980px) {
@@ -140,5 +155,10 @@ body{
     #question{
         font-size: 30px;
     }
+
+    .buttons{
+        gap: 2rem;
+    }
+
 }
 

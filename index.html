@@ -39,7 +39,10 @@
         </div>
     </div>
     <div class="status">
-        <button class="button" onclick="restartGame()">Restart</button>
+        <div class="buttons">
+            <button class="button btnrestart" onclick="restartGame()">Restart Game</button>
+            <button id="nextbtn" class="button btnnext" onclick="setUpGame()">Next Question</button>
+        </div>
         <h1 id="statustext"></h1>
     </div>
 </body>
