@@ -1,101 +1,104 @@
-body{
-    background-image: linear-gradient(rgb(243, 235, 235), rgb(199, 238, 211));
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    height: 100vh;
-    user-select: none;
-    overflow: hidden;
-    color: #444748;
+body {
+  background-image: linear-gradient(rgb(243, 235, 235), rgb(199, 238, 211));
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  height: 100vh;
+  user-select: none;
+  overflow: hidden;
+  color: #444748;
 }
 
-
-#flags-container{
-    max-width: 40%;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
-    grid-gap: 1rem;
-    border-radius: 10px;
-    margin: auto;
+#flags-container {
+  max-width: 40%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  grid-gap: 1rem;
+  border-radius: 10px;
+  margin: auto;
 }
 
-.flag-container{
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.flag-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.title{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+.title {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-.title, .status{
-    text-align: center;
-    line-height: 1;
+.title,
+.status {
+  text-align: center;
+  line-height: 1;
 }
 
-#question{
-    text-transform: uppercase;
-    font-size: 50px;
+#question {
+  text-transform: uppercase;
+  font-size: 50px;
 }
 
-#statustext{
-    font-size: 40px;
+#statustext {
+  font-size: 40px;
 }
 
-.flagimg{
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: cover;
-    border: 0.15rem solid rgb(0, 0, 0);
-    border-radius: 10px;
-    aspect-ratio: 16/9;
+.flagimg {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+  border: 0.15rem solid rgb(0, 0, 0);
+  border-radius: 10px;
+  aspect-ratio: 16/9;
+  transition: 0.2s;
 }
 
-.correct{
-    border: 0.3rem solid #00ff00;
-    border-radius: 10px;
+.correct {
+  border: 0.3rem solid #00ff00;
+  border-radius: 10px;
 }
 
-.incorrect{
-    border: 0.3rem solid #ff0000;
-    border-radius: 10px;
+.incorrect {
+  border: 0.3rem solid #ff0000;
+  border-radius: 10px;
+  opacity: 50%;
 }
 
-.flagimg:hover{
-    scale: 1.02;
+.flagimg:hover {
+  scale: 1.02;
 }
 
-.pointsholder{
-    display: flex;
-    height: 1rem;
-    width: 40%;
-    margin-bottom: 2rem;
+.pointsholder {
+  display: flex;
+  height: 1rem;
+  width: 40%;
+  margin-bottom: 2rem;
 }
 
-.points{
-    background-color: rgb(183, 183, 183);
-    flex-grow: 1;
-    border-radius: 20%;
-    margin: 0 0.5rem;
+.points {
+  background-color: rgb(183, 183, 183);
+  flex-grow: 1;
+  border-radius: 20%;
+  margin: 0 0.5rem;
 }
 
-.points:first-child{
-    margin-left: 0;
+.points:first-child {
+  margin-left: 0;
 }
 
-.points:last-child{
-    margin-right: 0;
+.points:last-child {
+  margin-right: 0;
 }
 
-.buttons{
-    display: flex;
-    justify-content: center;
-    gap: 6rem;
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 6rem;
 }
 
 .button {
@@ -104,18 +107,19 @@ body{
   background-color: #fff;
   border-radius: 24px;
   border-style: none;
-  box-shadow: rgba(0, 0, 0, .2) 0 3px 5px -1px,rgba(0, 0, 0, .14) 0 6px 10px 0,rgba(0, 0, 0, .12) 0 1px 18px 0;
+  box-shadow: rgba(0, 0, 0, 0.2) 0 3px 5px -1px,
+    rgba(0, 0, 0, 0.14) 0 6px 10px 0, rgba(0, 0, 0, 0.12) 0 1px 18px 0;
   box-sizing: border-box;
   color: #3c4043;
   cursor: pointer;
   display: inline-flex;
   fill: currentcolor;
-  font-family: "Google Sans",Roboto,Arial,sans-serif;
+  font-family: "Google Sans", Roboto, Arial, sans-serif;
   font-size: 14px;
   font-weight: 500;
   height: 40px;
   justify-content: center;
-  letter-spacing: .25px;
+  letter-spacing: 0.25px;
   line-height: normal;
   margin-top: 1rem;
   width: 10rem;
@@ -124,12 +128,14 @@ body{
   position: relative;
   text-align: center;
   text-transform: none;
-  transition: box-shadow 280ms cubic-bezier(.4, 0, .2, 1),opacity 15ms linear 30ms,transform 270ms cubic-bezier(0, 0, .2, 1) 0ms, background-color 250ms, color 300ms;
+  transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 15ms linear 30ms, transform 270ms cubic-bezier(0, 0, 0.2, 1) 0ms,
+    background-color 250ms, color 300ms;
   user-select: none;
 }
 
-.button:disabled{
-    background-color: #9e9e9e;
+.button:disabled {
+  background-color: #9e9e9e;
 }
 
 .btnrestart:hover:enabled {
@@ -138,27 +144,32 @@ body{
 }
 
 .btnnext:hover:enabled {
-    background-color: #87ff69;
-    color: #ffffff;
-  }
-
-  
-@media only screen and (max-width: 980px) {
-    #flags-container{
-        max-width: 80%
-    }
-
-    .pointsholder{
-        width: 80%;
-    }
-
-    #question{
-        font-size: 30px;
-    }
-
-    .buttons{
-        gap: 2rem;
-    }
-
+  background-color: #87ff69;
+  color: #ffffff;
 }
 
+.badge-incorrect {
+  background-color: #ff0000;
+}
+
+.badge-correct {
+  background-color: #00ff00;
+}
+
+@media only screen and (max-width: 980px) {
+  #flags-container {
+    max-width: 80%;
+  }
+
+  .pointsholder {
+    width: 80%;
+  }
+
+  #question {
+    font-size: 30px;
+  }
+
+  .buttons {
+    gap: 2rem;
+  }
+}
