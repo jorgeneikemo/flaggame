@@ -52,36 +52,24 @@ function checkAnswer() {
   const statusText = document.getElementById("statustext");
   const pointsDivs = document.querySelectorAll(".points");
 
-  const round = [...pointsDivs].reduce(
-    (acc, div) =>
-      acc +
-      (!div.classList.contains("badge-correct") &&
-      !div.classList.contains("badge-incorrect")
-        ? -1
-        : 0),
-    10
-  );
+  const round = checkRound(pointsDivs);
 
   const correctAnswer = isCorrectAnswer(randomFlagImgInfo);
 
   randomFlagImg.forEach((img, index) => {
-    if (index === correctAnswer) {
-      img.classList.add("correct");
-    } else {
-      img.classList.add("incorrect");
-    }
+    img.classList.add(index === correctAnswer ? "correct" : "incorrect");
   });
-  if (randomFlagImgInfo[this.id].toUpperCase() === questionText.innerText) {
-    randomNumberArray = [];
-    statusText.innerText = "Correct!";
-    statusText.style.color = "#00ff00";
-    pointsDivs[round].classList.add("badge-correct");
-  } else {
-    randomNumberArray = [];
-    statusText.innerText = "Wrong!";
-    statusText.style.color = "#ff0000";
-    pointsDivs[round].classList.add("badge-incorrect"); //
-  }
+
+  const userIsCorrect =
+    randomFlagImgInfo[this.id].toUpperCase() === questionText.innerText;
+
+  statusText.innerText = userIsCorrect ? "Correct!" : "Wrong!";
+  statusText.style.color = userIsCorrect ? "#00ff00" : "#ff0000";
+  pointsDivs[round].classList.add = userIsCorrect
+    ? "badge-correct"
+    : "badge-incorrect";
+  randomNumberArray = [];
+
   newRound();
 }
 
@@ -102,7 +90,19 @@ function newRound() {
     0
   );
 
-  const round = [...pointsDivs].reduce(
+  const round = checkRound(pointsDivs);
+
+  if (round != maxRounds) {
+    nextBtn.disabled = false;
+    return;
+  }
+
+  statusText.innerText = `Game Over. You got ${points}/${maxRounds} correct.`;
+  statusText.style.color = "#00ff00";
+}
+
+function checkRound(points) {
+  const round = [...points].reduce(
     (acc, div) =>
       acc +
       (!div.classList.contains("badge-correct") &&
@@ -111,22 +111,15 @@ function newRound() {
         : 0),
     10
   );
-
-  if (round != maxRounds) {
-    nextBtn.disabled = false;
-  } else {
-    statusText.innerText = `Game Over. You got ${points}/${maxRounds} correct.`;
-    statusText.style.color = "#00ff00";
-  }
+  return round;
 }
 
 async function restartGame() {
   const pointsDivs = document.querySelectorAll(".points");
   randomNumberArray = [];
-  pointsDivs.forEach((p) => {
-    p.classList.remove("badge-incorrect");
-    p.classList.remove("badge-correct");
-  });
+  pointsDivs.forEach((p) =>
+    p.classList.remove("badge-incorrect", "badge-correct")
+  );
 
   await getData();
 }
