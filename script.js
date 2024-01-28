@@ -1,74 +1,77 @@
-let randomFlagImgInfo = [];
-let randomNumberArray = [];
-let countries;
-
 window.onload = async function () {
-  await getData();
+  const restartBtn = document.querySelector(".btnrestart");
+  const nextBtn = document.querySelector(".btnnext");
+  restartBtn.addEventListener("click", restartGame);
+  nextBtn.addEventListener("click", setUpRound);
+  await setUpRound();
 };
 
-//Fetch all the countries info from json.
-async function getData() {
+async function setUpRound() {
   const url = "countries.json";
-  let response = await fetch(url);
-  // Convert the response into a JavaScript object
-  countries = await response.json();
-  setUpGame();
-}
+  const response = await fetch(url);
+  const countries = await response.json();
+  const randomFlagImgInfo = [];
 
-function setUpGame() {
   const questionText = document.getElementById("question");
   const randomFlagImg = document.querySelectorAll(".flagimg");
   const statusText = document.getElementById("statustext");
   const nextBtn = document.getElementById("nextbtn");
+  const randomNumberArray = [];
   nextBtn.disabled = true;
 
-  randomFlagImg.forEach((f) => {
-    f.addEventListener("click", checkAnswer);
-    f.classList.remove("incorrect");
-    f.classList.remove("correct");
-  });
-
-  //create 4 unique random numbers to choose info from the countryList.
   while (randomNumberArray.length < 4) {
     var r = Math.floor(Math.random() * countries.length);
     if (randomNumberArray.indexOf(r) === -1) randomNumberArray.push(r);
   }
 
-  //select random image and log the name.
-  for (i = 0; i < 4; i++) {
+  for (let i = 0; i < randomFlagImg.length; i++) {
     randomFlagImg[i].src = countries[randomNumberArray[i]].flag;
+    randomFlagImg[i].classList.remove("incorrect", "correct");
     randomFlagImgInfo[i] = countries[randomNumberArray[i]].name;
+
+    const eventHandler = () => {
+      checkAnswer(randomFlagImgInfo, i);
+    };
+
+    randomFlagImg[i].addEventListener("click", eventHandler);
+    randomFlagImg[i].storedEventHandler = eventHandler;
   }
 
-  // Choose a random country for the question
   questionText.innerText = randomFlagImgInfo[Math.floor(Math.random() * 4)];
   statusText.innerText = "";
 }
 
-// This function runs when a flag is clicked
-function checkAnswer() {
-  const questionText = document.getElementById("question");
+function removeEventListeners() {
+  const randomFlagImg = document.querySelectorAll(".flagimg");
+  randomFlagImg.forEach((img) => {
+    if (img.storedEventHandler) {
+      img.removeEventListener("click", img.storedEventHandler);
+    }
+  });
+}
+
+function checkAnswer(flagInfo, id) {
+  const questionText = document.getElementById("question").innerText;
   const randomFlagImg = document.querySelectorAll(".flagimg");
   const statusText = document.getElementById("statustext");
   const pointsDivs = document.querySelectorAll(".points");
-
   const round = checkRound(pointsDivs);
 
-  const correctAnswer = isCorrectAnswer(randomFlagImgInfo);
+  const correctAnswer = flagInfo.findIndex(
+    (r) => r.toUpperCase() === questionText
+  );
 
   randomFlagImg.forEach((img, index) => {
     img.classList.add(index === correctAnswer ? "correct" : "incorrect");
   });
 
-  const userIsCorrect =
-    randomFlagImgInfo[this.id].toUpperCase() === questionText.innerText;
+  const userIsCorrect = flagInfo[id].toUpperCase() === questionText;
 
   statusText.innerText = userIsCorrect ? "Correct!" : "Wrong!";
   statusText.style.color = userIsCorrect ? "#00ff00" : "#ff0000";
-  pointsDivs[round].classList.add = userIsCorrect
-    ? "badge-correct"
-    : "badge-incorrect";
-  randomNumberArray = [];
+  pointsDivs[round].classList.add(
+    userIsCorrect ? "badge-correct" : "badge-incorrect"
+  );
 
   newRound();
 }
@@ -79,7 +82,7 @@ function isCorrectAnswer(flags) {
 }
 
 function newRound() {
-  removeEventListener();
+  removeEventListeners();
   const maxRounds = 10;
   const statusText = document.getElementById("statustext");
   const nextBtn = document.getElementById("nextbtn");
@@ -116,15 +119,9 @@ function checkRound(points) {
 
 async function restartGame() {
   const pointsDivs = document.querySelectorAll(".points");
-  randomNumberArray = [];
   pointsDivs.forEach((p) =>
     p.classList.remove("badge-incorrect", "badge-correct")
   );
 
-  await getData();
-}
-
-function removeEventListener() {
-  const randomFlagImg = document.querySelectorAll(".flagimg");
-  randomFlagImg.forEach((f) => f.removeEventListener("click", checkAnswer));
+  await setUpRound();
 }
